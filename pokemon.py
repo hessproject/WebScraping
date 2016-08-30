@@ -4,7 +4,10 @@
 
 """
 A module for scraping Bulbapedia for pokemon stats (Currently only implemented for Gen I)
+The main method fetches and pairs a list of IDs, names, and stats for the original 151 pokemon
+It returns a list of tuples, but can be converted to JSON with the convert_to_json method
 """
+
 from collections import OrderedDict
 import requests
 import bs4
@@ -15,6 +18,7 @@ def get_base_stat_data():
     """
     :return: A BeautifulSoup object containing data from Bulbapedia
     """
+
     url = "http://bulbapedia.bulbagarden.net/wiki/List_of_Pokémon_by_base_stats_(Generation_I)"
     r = requests.get(url, "lxml")
     soup = bs4.BeautifulSoup(r.content)
@@ -23,10 +27,11 @@ def get_base_stat_data():
 
 def get_pokemon_ids(soup):
     """
-    :param soup: The BeautifulSoup object returned by getPageData()
+    :param soup: The BeautifulSoup object returned by get_page_data()
 
     :return: A list of Pokemon IDs
     """
+
     list_of_ids = []
 
     for element in soup.find_all("b"):
@@ -37,10 +42,11 @@ def get_pokemon_ids(soup):
 
 def get_pokemon_names(soup):
     """
-    :param soup: The BeautifulSoup object returned by getPageData()
+    :param soup: The BeautifulSoup object returned by get_page_data()
 
     :return: A list of Pokemon names in order
     """
+
     list_of_names = []
 
     for element in soup.find_all("td", align="left"):
@@ -51,10 +57,11 @@ def get_pokemon_names(soup):
 
 def get_hp_stats(soup):
     """
-    :param soup: The BeautifulSoup object returned by getPageData()
+    :param soup: The BeautifulSoup object returned by get_page_data()
 
     :return: A list of Pokemon HP base stats
     """
+
     list_of_hps = []
 
     for element in soup.find_all("td", style="background:#FF5959"):
@@ -65,10 +72,11 @@ def get_hp_stats(soup):
 
 def get_attack_stats(soup):
     """
-    :param soup: The BeautifulSoup object returned by getPageData()
+    :param soup: The BeautifulSoup object returned by get_page_data()
 
     :return: A list of Pokemon Attack base stats
     """
+
     list_of_attacks = []
 
     for element in soup.find_all("td", style="background:#F5AC78"):
@@ -79,10 +87,11 @@ def get_attack_stats(soup):
 
 def get_defense_stats(soup):
     """
-    :param soup: The BeautifulSoup object returned by getPageData()
+    :param soup: The BeautifulSoup object returned by get_page_data()
 
     :return: A list of Pokemon Defense base stats
     """
+
     list_of_defenses = []
 
     for element in soup.find_all("td", style="background:#FAE078"):
@@ -93,10 +102,11 @@ def get_defense_stats(soup):
 
 def get_speed_stats(soup):
     """
-    :param soup: The BeautifulSoup object returned by getPageData()
+    :param soup: The BeautifulSoup object returned by get_page_data()
 
     :return: A list of Pokemon Speed base stats
     """
+
     list_of_speeds = []
 
     for element in soup.find_all("td", style="background:#FA92B2"):
@@ -107,10 +117,11 @@ def get_speed_stats(soup):
 
 def get_special_stats(soup):
     """
-    :param soup: The BeautifulSoup object returned by getPageData()
+    :param soup: The BeautifulSoup object returned by get_page_data()
 
     :return: A list of Pokemon Special base stats
     """
+
     list_of_specials = []
 
     for element in soup.find_all("td", style="background:#94EFE0"):
@@ -156,7 +167,7 @@ def convert_to_json(pokedex):
 
 def main():
     """
-    :return: Fetched data as a list of tuples and as JSON
+    :return: Fetched data as a list of tuples
     """
     soup = get_base_stat_data()
 
